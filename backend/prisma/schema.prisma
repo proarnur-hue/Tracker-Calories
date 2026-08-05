@@ -1,0 +1,91 @@
+// PostgreSQL (например, бесплатный Neon — https://neon.tech). Локально можно
+// использовать ту же самую БД, что и в проде, либо завести отдельный Neon-проект
+// для разработки — оба варианта работают, DATABASE_URL просто указывает на нужную.
+// Sex/ActivityLevel/ConfidenceLevel хранятся как String, а не native enum —
+// исторически схема была совместима и с SQLite (без enum), допустимые значения
+// валидируются на уровне zod-схем (validators/*.schema.ts). При желании их можно
+// перевести на нативные Postgres enum без изменения бизнес-логики.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Профиль для расчёта дневной нормы по формуле Миффлина-Сан Жеора.
+  // sex: "male" | "female"; activityLevel: "sedentary" | "light" | "moderate" | "active" | "very_active"
+  sex              String?
+  birthDate        DateTime?
+  heightCm         Float?
+  weightKg         Float?
+  activityLevel    String?
+  dailyCalorieGoal Float? // ручной override, если задан — используется вместо расчёта
+
+  refreshTokens RefreshToken[]
+  mealEntries   MealEntry[]
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model MealEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  photoUrl  String?
+  eatenAt   DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  // "high" | "medium" | "low"
+  overallConfidence   String?
+  notes               String?
+  needsClarification  Boolean @default(false)
+  clarificationReason String?
+
+  // Пересчитываются backend'ом на основе items — не доверяем сумме от vision-модели
+  totalCalories Float @default(0)
+  totalProtein  Float @default(0)
+  totalFat      Float @default(0)
+  totalCarbs    Float @default(0)
+
+  items MealItem[]
+
+  @@index([userId, eatenAt])
+}
+
+model MealItem {
+  id          String    @id @default(uuid())
+  mealEntryId String
+  mealEntry   MealEntry @relation(fields: [mealEntryId], references: [id], onDelete: Cascade)
+
+  name             String
+  estimatedWeightG Float
+  weightConfidence String? // "high" | "medium" | "low"
+  cookingMethod    String?
+  caloriesKcal     Float
+  proteinG         Float
+  fatG             Float
+  carbsG           Float
+  isManuallyEdited Boolean @default(false)
+
+  @@index([mealEntryId])
+}

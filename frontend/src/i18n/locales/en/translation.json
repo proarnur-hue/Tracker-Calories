@@ -1,0 +1,121 @@
+{
+  "app": {
+    "title": "CalorieCamera",
+    "tagline": "Calorie counter from food photos"
+  },
+  "nav": {
+    "diary": "Diary",
+    "stats": "Stats",
+    "profile": "Profile",
+    "logout": "Log out"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "registerTitle": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Log in",
+    "registerButton": "Sign up",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "switchToRegister": "Sign up",
+    "switchToLogin": "Log in",
+    "invalidCredentials": "Invalid email or password",
+    "passwordHint": "At least 8 characters"
+  },
+  "upload": {
+    "title": "Add a meal",
+    "dropzone": "Drag a photo here or click to choose",
+    "takePhoto": "Take a photo",
+    "chooseFile": "Choose file",
+    "analyzing": "Analyzing photo…",
+    "analyzingHint": "This can take a few seconds",
+    "manualEntry": "Enter manually, without a photo",
+    "noCameraAccess": "No access to the camera or file. Check your browser permissions and try again.",
+    "networkError": "Could not reach the server. Check your internet connection and try again.",
+    "unsupportedFormat": "Only JPEG, PNG and WebP are supported",
+    "fileTooLarge": "File is too large (max 10MB)"
+  },
+  "result": {
+    "title": "Recognition result",
+    "approxBadge": "≈ approximate estimate based on the photo",
+    "confidence": "Confidence",
+    "confidenceHigh": "high",
+    "confidenceMedium": "medium",
+    "confidenceLow": "low",
+    "weightConfidence": "Weight confidence",
+    "cookingMethod": "Cooking method",
+    "weight": "Weight",
+    "calories": "Calories",
+    "protein": "Protein",
+    "fat": "Fat",
+    "carbs": "Carbs",
+    "notes": "Note",
+    "addItem": "Add component",
+    "removeItem": "Remove",
+    "editManually": "Adjust manually",
+    "save": "Save to diary",
+    "retake": "Retake photo",
+    "needsClarificationTitle": "Could not recognize the photo",
+    "needsClarificationHint": "Try taking the photo again in good lighting, or enter the meal manually.",
+    "totalFor": "Total"
+  },
+  "diary": {
+    "title": "Food diary",
+    "today": "Today",
+    "empty": "No entries yet — add your first meal",
+    "addMeal": "Add meal",
+    "dailyGoal": "Daily goal",
+    "goalNotSet": "Goal not set — fill in your profile",
+    "of": "of",
+    "kcal": "kcal",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirmDelete": "Delete this entry?"
+  },
+  "stats": {
+    "title": "Statistics",
+    "week": "Week",
+    "month": "Month",
+    "calories": "Calories",
+    "protein": "Protein",
+    "fat": "Fat",
+    "carbs": "Carbs",
+    "noData": "Not enough data for a chart"
+  },
+  "profile": {
+    "title": "Profile",
+    "sex": "Sex",
+    "male": "Male",
+    "female": "Female",
+    "birthDate": "Birth date",
+    "height": "Height (cm)",
+    "weight": "Weight (kg)",
+    "activityLevel": "Activity level",
+    "activity_sedentary": "Sedentary",
+    "activity_light": "Light activity (1-3 workouts/week)",
+    "activity_moderate": "Moderate activity (3-5 workouts/week)",
+    "activity_active": "High activity (6-7 workouts/week)",
+    "activity_very_active": "Very high activity",
+    "calculatedGoal": "Calculated goal (Mifflin-St Jeor formula)",
+    "manualGoal": "Custom daily goal (kcal), optional",
+    "save": "Save",
+    "saved": "Profile saved"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "gram": "g",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark"
+  },
+  "disclaimer": {
+    "short": "Calorie and macro estimates are approximate and based on visual analysis of the photo.",
+    "full": "Calorie and macro estimates are approximate and based on visual analysis of the photo. Actual values may differ. This is not a medical tool — consult a specialist if you have conditions requiring strict dietary control.",
+    "iUnderstand": "Got it"
+  }
+}

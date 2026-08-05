@@ -1,0 +1,58 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Разворачивает backend (Node web service) и frontend (статический сайт) из
+# этого монорепозитория одним подключением в Render Dashboard → New → Blueprint.
+#
+# База данных — НЕ через Render Postgres (там бесплатный тариф ограничен по
+# времени), а через внешний Neon (postgres, бесплатно навсегда) — DATABASE_URL
+# заполняется вручную при разворачивании (см. sync: false ниже).
+
+services:
+  - type: web
+    name: calorie-tracker-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: qwen/qwen3.6-27b
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_TTL
+        value: 15m
+      - key: JWT_REFRESH_TTL
+        value: 30d
+      - key: FRONTEND_ORIGIN
+        value: https://calorie-tracker-frontend.onrender.com
+      - key: STORAGE_PROVIDER
+        value: local
+      - key: UPLOADS_DIR
+        value: ./uploads
+      - key: ANALYZE_RATE_LIMIT_MAX
+        value: 20
+      - key: ANALYZE_RATE_LIMIT_WINDOW_MS
+        value: 3600000
+
+  - type: web
+    name: calorie-tracker-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://calorie-tracker-backend.onrender.com
+    routes:
+      # SPA-роутинг: прямой переход/обновление на /diary, /profile и т.д.
+      # должен отдавать index.html, а не 404.
+      - type: rewrite
+        source: /*
+        destination: /index.html

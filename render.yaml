@@ -31,7 +31,7 @@ services:
       - key: JWT_REFRESH_TTL
         value: 30d
       - key: FRONTEND_ORIGIN
-        value: https://calorie-tracker-frontend.onrender.com
+        value: https://calorie-tracker-frontend-v7d0.onrender.com
       - key: STORAGE_PROVIDER
         value: local
       - key: UPLOADS_DIR
@@ -49,7 +49,7 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
-        value: https://calorie-tracker-backend.onrender.com
+        value: https://calorie-tracker-backend-bmdi.onrender.com
     routes:
       # SPA-роутинг: прямой переход/обновление на /diary, /profile и т.д.
       # должен отдавать index.html, а не 404.
